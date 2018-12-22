@@ -7,10 +7,10 @@ from sklearn.ensemble import RandomForestClassifier
 
 # Adapted from https://scikit-learn.org/stable/auto_examples/ensemble/plot_ensemble_oob.html
 
-clf1 = RandomForestClassifier(n_estimators=100, random_state=4,verbose=0,oob_score=True,warm_start=True)
-clf2 = RandomForestClassifier(n_estimators=100, random_state=4,verbose=0,oob_score=True,warm_start=True)
-clf3 = RandomForestClassifier(n_estimators=100, random_state=4,verbose=0,oob_score=True,warm_start=True)
-clf4 = RandomForestClassifier(n_estimators=100, random_state=4,verbose=0,oob_score=True,warm_start=True)
+clf1 = RandomForestClassifier(n_estimators=100, random_state=4, verbose=0, oob_score=True, warm_start=True)
+clf2 = RandomForestClassifier(n_estimators=100, random_state=4, verbose=0, oob_score=True, warm_start=True)
+clf3 = RandomForestClassifier(n_estimators=100, random_state=4, verbose=0, oob_score=True, warm_start=True)
+clf4 = RandomForestClassifier(n_estimators=100, random_state=4, verbose=0, oob_score=True, warm_start=True)
 
 # Get data using spacy for text
 x_train_s, x_test_s, y_train_s = get_data(text_clean)
@@ -20,8 +20,8 @@ x_train_f, x_test_f, y_train_f = get_data(normalize_df)
 x_train_n, x_test_n, y_train_n = x_train_f.T[:7].T, x_test_f.T[:7].T, y_train_f
 # Get data using combined spacy + tf_idf
 num_nontext_features = x_train_n.shape[1]
-x_train_c = np.hstack((x_train_s,x_train_f[:,num_nontext_features:]))
-x_test_c = np.hstack((x_test_s,x_test_f[:,num_nontext_features:]))
+x_train_c = np.hstack((x_train_s, x_train_f[:, num_nontext_features:]))
+x_test_c = np.hstack((x_test_s, x_test_f[:, num_nontext_features:]))
 
 ensemble_clfs = [
     ("TF-IDF", clf1, x_train_f, y_train_f),

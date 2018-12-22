@@ -14,18 +14,14 @@ x_train_f, x_test_f, y_train_f = get_data(normalize_df)
 x_train_n, x_test_n, y_train_n = x_train_f.T[:7].T, x_test_f.T[:7].T, y_train_f
 # Get data using combined spacy + tf_idf
 num_nontext_features = x_train_n.shape[1]
-x_train_c = np.hstack((x_train_s,x_train_f[:,num_nontext_features:]))
-x_test_c = np.hstack((x_test_s,x_test_f[:,num_nontext_features:]))
+x_train_c = np.hstack((x_train_s, x_train_f[:, num_nontext_features:]))
+x_test_c = np.hstack((x_test_s, x_test_f[:, num_nontext_features:]))
 
 
-clf1 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
-                                 max_depth=4, random_state=0,warm_start=False)
-clf2 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
-                                 max_depth=4, random_state=0, warm_start=False)
-clf3 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
-                                 max_depth=4, random_state=0, warm_start=False)
-clf4 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
-                                 max_depth=4, random_state=0, warm_start=False)
+clf1 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=4, random_state=0, warm_start=False)
+clf2 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=4, random_state=0, warm_start=False)
+clf3 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=4, random_state=0, warm_start=False)
+clf4 = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=4, random_state=0, warm_start=False)
 
 ensemble_clfs = [
     ("TF-IDF", clf1, x_train_f, y_train_f),
@@ -44,7 +40,6 @@ max_estimators = 50
 for label, clf, x, y in ensemble_clfs:
     for i in range(min_estimators, max_estimators + 1):
         scores = []
-        #clf.estimators_.flags['OWNDATA'] = True
         clf.set_params(n_estimators=i)
         for _ in range(4):
             xTr, yTr, xValid, yValid = shuffle(x, y)

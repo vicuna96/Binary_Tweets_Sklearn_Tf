@@ -21,8 +21,8 @@ x_train_f, x_test_f, y_train_f = get_data(normalize_df)
 x_train_n, x_test_n, y_train_n = x_train_f.T[:7].T, x_test_f.T[:7].T, y_train_f
 # Get data using combined spacy + tf_idf
 num_nontext_features = x_train_n.shape[1]
-x_train_c = np.hstack((x_train_s,x_train_f[:,num_nontext_features:]))
-x_test_c = np.hstack((x_test_s,x_test_f[:,num_nontext_features:]))
+x_train_c = np.hstack((x_train_s, x_train_f[:, num_nontext_features:]))
+x_test_c = np.hstack((x_test_s, x_test_f[:, num_nontext_features:]))
 
 ensemble_clfs = [
     ("TF-IDF", clf1, x_train_f, y_train_f),
@@ -43,7 +43,7 @@ for label, clf, x, y in ensemble_clfs:
         scores = []
         for _ in range(20):
             clf.set_params(n_neighbors=i)
-            xTr, yTr, xValid, yValid = shuffle(x,y,.9)
+            xTr, yTr, xValid, yValid = shuffle(x, y, .9)
 
             clf.fit(xTr, yTr)
 
